@@ -19,7 +19,11 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        if let serverController = segue.destinationViewController as? TSServerViewController {
+//            let closeItem = UITabBarItem(
+//        }
+    }
 }
 
