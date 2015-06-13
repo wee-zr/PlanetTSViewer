@@ -18,7 +18,14 @@ class TSServerViewCell: UITableViewCell {
 
 class TSServerViewController: UITableViewController, TSServerDelegate {
 
-    var server: TSServer?
+    var server: TSServer? {
+        didSet {
+            if let actualServer = server where actualServer.delegate == nil {
+                actualServer.delegate = self
+            }
+        }
+    }
+    
     var activityIndikator: UIActivityIndicatorView?
     
     override func viewDidLoad() {
@@ -40,9 +47,9 @@ class TSServerViewController: UITableViewController, TSServerDelegate {
             indikator.startAnimating()
         }
         
-        let url = NSURL(string: "https://api.planetteamspeak.com/servernodes/82.211.30.15:9987/")!
-        server = TSServer(contentsOfURL: url)
-        server!.delegate = self
+//        let url = NSURL(string: "https://api.planetteamspeak.com/servernodes/82.211.30.15:9987/")!
+//        server = TSServer(contentsOfURL: url)
+//        server!.delegate = self
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false

@@ -122,7 +122,6 @@ class TSServer : TSNode {
                 print("response size in bytes: \(data.length)")
                 do {
                     let json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
-                    print(json)
                     dispatch_async(dispatch_get_main_queue()) { //load the data on the main thread
                         self.loadJSONObject(json)
                     }

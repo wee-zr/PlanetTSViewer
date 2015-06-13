@@ -21,7 +21,14 @@
                                 <rect key="frame" x="237" y="141" width="127" height="30"/>
                                 <state key="normal" title="Planet TeamSpeak"/>
                                 <connections>
-                                    <segue destination="XuM-5k-Zue" kind="show" id="Dlb-pA-oEF"/>
+                                    <action selector="showPlanetTeamSpeak:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Hdm-sp-B2E"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Isk-8x-HyZ">
+                                <rect key="frame" x="242" y="206" width="117" height="30"/>
+                                <state key="normal" title="Rocket Beans TV"/>
+                                <connections>
+                                    <action selector="showRocketBeans:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QEu-1F-BZ6"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -29,13 +36,18 @@
                         <constraints>
                             <constraint firstItem="DcK-Q6-SfU" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3cU-zY-Scg"/>
                             <constraint firstItem="DcK-Q6-SfU" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="77" id="EuK-l4-ce4"/>
+                            <constraint firstItem="Isk-8x-HyZ" firstAttribute="top" secondItem="DcK-Q6-SfU" secondAttribute="bottom" constant="35" id="mpw-Sh-qEC"/>
+                            <constraint firstItem="Isk-8x-HyZ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="w9N-Hx-klo"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Servers" id="kxK-xu-syJ"/>
+                    <connections>
+                        <segue destination="XuM-5k-Zue" kind="show" identifier="showServerView" id="CbC-gw-EEA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1207" y="405"/>
+            <point key="canvasLocation" x="1275" y="395"/>
         </scene>
         <!--Server View Controller-->
         <scene sceneID="xxU-ad-MgT">
@@ -77,7 +89,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IWT-Od-DR0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1992" y="405"/>
+            <point key="canvasLocation" x="1959" y="395"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ovK-Ct-kjt">
@@ -95,7 +107,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="69W-BU-5N4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="472" y="405"/>
+            <point key="canvasLocation" x="500" y="405"/>
         </scene>
     </scenes>
     <resources>
