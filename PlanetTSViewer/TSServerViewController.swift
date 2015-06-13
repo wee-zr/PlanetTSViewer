@@ -19,14 +19,31 @@ class TSServerViewCell: UITableViewCell {
 class TSServerViewController: UITableViewController, TSServerDelegate {
 
     var server: TSServer?
+    var activityIndikator: UIActivityIndicatorView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.separatorStyle = .None
+        tableView.scrollEnabled = false
+        
+        activityIndikator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+        if let indikator = activityIndikator {
+            indikator.translatesAutoresizingMaskIntoConstraints = false
+        
+            tableView.addSubview(indikator)
+            tableView.addConstraint(NSLayoutConstraint(item: indikator, attribute: .CenterX, relatedBy: .Equal,
+                toItem: tableView, attribute: .CenterX, multiplier: 1, constant: 0))
+            tableView.addConstraint(NSLayoutConstraint(item: indikator, attribute: .Top, relatedBy: .Equal,
+                toItem: self.topLayoutGuide, attribute: .Top, multiplier: 1, constant: 44))
 
+            indikator.startAnimating()
+        }
+        
         let url = NSURL(string: "https://api.planetteamspeak.com/servernodes/82.211.30.15:9987/")!
         server = TSServer(contentsOfURL: url)
         server!.delegate = self
-        
+
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -41,6 +58,14 @@ class TSServerViewController: UITableViewController, TSServerDelegate {
 
     func serverLoaded(server: TSServer) {
         navigationItem.title = server.name
+        tableView.separatorStyle = .SingleLine
+        tableView.scrollEnabled = true
+        
+        if let indikator = activityIndikator {
+            indikator.hidden = true
+            indikator.stopAnimating()
+        }
+        
         tableView.reloadData()
     }
     
@@ -76,7 +101,7 @@ class TSServerViewController: UITableViewController, TSServerDelegate {
         let tsNode = server.allNodes[indexPath.row]
         
         cell.textLabel!.text = tsNode.name
-        cell.indentationLevel = tsNode.indentation-1
+        cell.indentationLevel = tsNode.indentation - (server.showServerInTree ? 1 : 2)
         cell.indentationWidth = 20
         
         if tsNode.spacerType == .None {
@@ -87,6 +112,10 @@ class TSServerViewController: UITableViewController, TSServerDelegate {
             // is spacer
             cell.imageView!.image = nil
             cell.textLabel!.textColor = UIColor(white: 0.36, alpha: 1)
+        }
+
+        if tsNode.type == .Server {
+            cell.imageView!.image = UIImage(named: "server")
         }
     }
     

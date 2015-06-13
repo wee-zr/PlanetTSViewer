@@ -82,6 +82,8 @@ class TSNode : NSObject {
 
 class TSServer : TSNode {
     
+    let showServerInTree = true // true will lead to a retain cycle, because TSServer adds itself to allNodes
+    
     weak var delegate: TSServerDelegate?
     var allNodes: [TSNode] = []
     
@@ -170,8 +172,14 @@ class TSServer : TSNode {
             
             tsNode.takeValuesFromJSONObject(node)
             
+            if let server = tsNode as? TSServer where server.showServerInTree == false {
+                // don't add server itself to the tree
+            }
+            else {
+                allNodes.append(tsNode)
+            }
             
-            allNodes.append(tsNode)
+            
         }
         
         delegate?.serverLoaded(self)
