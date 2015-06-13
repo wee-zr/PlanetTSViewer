@@ -80,12 +80,19 @@ class TSNode : NSObject {
     }
 }
 
+class Weak<T: AnyObject> {
+    weak var value: T!
+    init (_ value: T) {
+        self.value = value
+    }
+}
+
 class TSServer : TSNode {
     
     let showServerInTree = true // true will lead to a retain cycle, because TSServer adds itself to allNodes
     
     weak var delegate: TSServerDelegate?
-    var allNodes: [TSNode] = []
+    var allNodes: [Weak<TSNode>] = []
     
     init(contentsOfURL: NSURL) {
         super.init()
@@ -102,8 +109,8 @@ class TSServer : TSNode {
         }
         
         for node in allNodes {
-            if node.identifier == identifier {
-                return node
+            if node.value.identifier == identifier {
+                return node.value
             }
         }
         
@@ -184,7 +191,7 @@ class TSServer : TSNode {
                 // don't add server itself to the tree
             }
             else {
-                allNodes.append(tsNode)
+                allNodes.append(Weak(tsNode))
             }
             
             

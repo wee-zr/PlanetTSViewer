@@ -109,7 +109,7 @@ class TSServerViewController: UITableViewController, TSServerDelegate {
             return
         }
         
-        let tsNode = server.allNodes[indexPath.row]
+        let tsNode = server.allNodes[indexPath.row].value
         
         cell.textLabel!.text = tsNode.name
         cell.indentationLevel = tsNode.indentation - (server.showServerInTree ? 1 : 2)
