@@ -29,6 +29,18 @@ class TSNode : NSObject {
         }
     }
     
+    enum SpacerType {
+        case None
+        case Some
+        
+        init(string: String) {
+            switch string {
+            case "none": self = .None
+            default: self = .Some
+            }
+        }
+    }
+    
     var type: Type = .Invalid
     var children: [TSNode] = []
     var name = "unnamed"
@@ -36,6 +48,36 @@ class TSNode : NSObject {
     var indentation = 0
     var imageName = ""
     weak var parent: TSNode?
+
+    var spacerType: SpacerType = .None
+    
+    func takeValuesFromJSONObject(json: NSDictionary) {
+        if let type = json["class"] as? String {
+            self.type = Type(string: type)
+        }
+        
+        if let level = json["level"] as? NSNumber {
+            self.indentation = level.integerValue
+        }
+        
+        if let ident = json["ident"] as? String {
+            self.identifier = ident
+        }
+        
+        if let image = json["image"] as? String {
+           self.imageName = image
+        }
+
+        if let name = json["name"] as? String {
+            self.name = name
+        }
+        
+        if let props = json["props"] as? NSDictionary {
+            if let spacer = props["spacer"] as? String where type == .Channel {
+                spacerType = SpacerType(string: spacer)
+            }
+        }
+    }
 }
 
 class TSServer : TSNode {
@@ -43,13 +85,8 @@ class TSServer : TSNode {
     weak var delegate: TSServerDelegate?
     var allNodes: [TSNode] = []
     
-    var root: TSNode? {
-        return nodeWithIdentifier("ts3_s1")
-    }
-    
     init(contentsOfURL: NSURL) {
         super.init()
-        type = .Server
         
         let session = NSURLSession.sharedSession()
         if let task = session.downloadTaskWithURL(contentsOfURL, completionHandler: handleDownloadTask) {
@@ -83,6 +120,7 @@ class TSServer : TSNode {
                 print("response size in bytes: \(data.length)")
                 do {
                     let json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
+                    print(json)
                     dispatch_async(dispatch_get_main_queue()) { //load the data on the main thread
                         self.loadJSONObject(json)
                     }
@@ -111,40 +149,29 @@ class TSServer : TSNode {
         print("json data node count: \(data.count)")
         
         for node in data as! [NSDictionary] {
-            //var ident = node["ident"]
-            guard let typeString = node["class"] as? String,
-                let level = node["level"] as? NSNumber,
-                let ident = node["ident"] as? String,
-                let parentIdent = node["parent"] as? String,
-                let imageName = node["image"] as? String else {
-                    print("node data is not complete")
-                    print("data is: \(node)")
-                    return
+            guard let parentIdent = node["parent"] as? String else {
+                print("node has no parent")
+                continue
             }
             
-            let tsNode = TSNode()
-            tsNode.type = Type(string: typeString)
-            tsNode.identifier = ident
-            tsNode.indentation = level.integerValue
-            tsNode.imageName = imageName
-            
-            if let name = node["name"] as? String {
-                tsNode.name = name
-            }
-            
-            allNodes.append(tsNode)
+            let tsNode: TSNode
             
             if let parent = nodeWithIdentifier(parentIdent) {
+                tsNode = TSNode()
                 parent.children.append(tsNode)
             }
             else {
-                if parentIdent == "ts3" {
-                    print("found root")
+                if type != .Invalid {
+                    print("found node with no parent and root is already initialized")
+                    continue
                 }
-                else {
-                    print("can't find parent with identifier \(parentIdent)")
-                }
+                tsNode = self
             }
+            
+            tsNode.takeValuesFromJSONObject(node)
+            
+            
+            allNodes.append(tsNode)
         }
         
         delegate?.serverLoaded(self)

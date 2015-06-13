@@ -40,11 +40,7 @@ class TSServerViewController: UITableViewController, TSServerDelegate {
     }
 
     func serverLoaded(server: TSServer) {
-        
-        if let root = server.root {
-            navigationItem.title = root.name
-        }
-        
+        navigationItem.title = server.name
         tableView.reloadData()
     }
     
@@ -80,8 +76,18 @@ class TSServerViewController: UITableViewController, TSServerDelegate {
         let tsNode = server.allNodes[indexPath.row]
         
         cell.textLabel!.text = tsNode.name
-        cell.indentationLevel = tsNode.indentation
-        cell.imageView!.image = UIImage(named: tsNode.imageName)
+        cell.indentationLevel = tsNode.indentation-1
+        cell.indentationWidth = 20
+        
+        if tsNode.spacerType == .None {
+            cell.imageView!.image = UIImage(named: tsNode.imageName)
+            cell.textLabel!.textColor = UIColor.darkTextColor()
+        }
+        else {
+            // is spacer
+            cell.imageView!.image = nil
+            cell.textLabel!.textColor = UIColor(white: 0.36, alpha: 1)
+        }
     }
     
     /*
