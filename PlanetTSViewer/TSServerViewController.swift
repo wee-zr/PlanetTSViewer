@@ -36,7 +36,7 @@ class TSServerViewController: UITableViewController, TSServerDelegate {
         
         activityIndikator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
         if let indikator = activityIndikator {
-            indikator.translatesAutoresizingMaskIntoConstraints = false
+            indikator.setTranslatesAutoresizingMaskIntoConstraints(false)
         
             tableView.addSubview(indikator)
             tableView.addConstraint(NSLayoutConstraint(item: indikator, attribute: .CenterX, relatedBy: .Equal,
@@ -93,7 +93,7 @@ class TSServerViewController: UITableViewController, TSServerDelegate {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("tsNode", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("tsNode", forIndexPath: indexPath) as! UITableViewCell
 
         // Configure the cell...
 
@@ -101,7 +101,11 @@ class TSServerViewController: UITableViewController, TSServerDelegate {
     }
 
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        guard let server = self.server else {
+        let server: TSServer
+        if let actualServer = self.server {
+            server = actualServer
+        }
+        else {
             return
         }
         

@@ -91,13 +91,9 @@ class TSServer : TSNode {
         super.init()
         
         let session = NSURLSession.sharedSession()
-        if let task = session.downloadTaskWithURL(contentsOfURL, completionHandler: handleDownloadTask) {
-            print("starting download task for url \(contentsOfURL)")
-            task.resume()
-        }
-        else {
-            print("can't create download task for url \(contentsOfURL)")
-        }
+        let task = session.downloadTaskWithURL(contentsOfURL, completionHandler: handleDownloadTask)
+        println("starting download task for url \(contentsOfURL)")
+        task.resume()
     }
     
     func nodeWithIdentifier(identifier: String) -> TSNode? {
@@ -116,42 +112,55 @@ class TSServer : TSNode {
     
     private func handleDownloadTask(location: NSURL?, response: NSURLResponse?, error: NSError?) {
         if let actualLocation = location {
-            print("downlaod task completed")
+            println("downlaod task completed")
             
             if let data = NSData(contentsOfURL: actualLocation) {
-                print("response size in bytes: \(data.length)")
-                do {
-                    let json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
+                println("response size in bytes: \(data.length)")
+                if let json = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as? NSDictionary {
                     dispatch_async(dispatch_get_main_queue()) { //load the data on the main thread
                         self.loadJSONObject(json)
                     }
-                } catch {
-                    print("can't get json data from response. error: \(error)")
+                }
+                else {
+                    println("can't get json data from response. error: \(error)")
                 }
             }
         }
         
         if let actualError = error {
-            print("download task error \(actualError.code): \(actualError.localizedDescription)")
+            println("download task error \(actualError.code): \(actualError.localizedDescription)")
         }
     }
     
     private func loadJSONObject(json: NSDictionary) {
-        guard let result = json["result"] as? NSDictionary else {
-            print("no result object inside json data")
+        let result: NSDictionary
+        let data: NSArray
+        
+        if let actualResult = json["result"] as? NSDictionary {
+            result = actualResult
+        }
+        else {
+            println("no result object inside json data")
             return
         }
         
-        guard let data = result["data"] as? NSArray else {
-            print("no data object inside json")
+        if let actualData = result["data"] as? NSArray {
+            data = actualData
+        }
+        else {
+            println("no data object inside json")
             return
         }
         
-        print("json data node count: \(data.count)")
+        println("json data node count: \(data.count)")
         
         for node in data as! [NSDictionary] {
-            guard let parentIdent = node["parent"] as? String else {
-                print("node has no parent")
+            let parentIdent: String
+            if let parent = node["parent"] as? String {
+                parentIdent = parent
+            }
+            else {
+                println("node has no parent")
                 continue
             }
             
@@ -163,7 +172,7 @@ class TSServer : TSNode {
             }
             else {
                 if type != .Invalid {
-                    print("found node with no parent and root is already initialized")
+                    println("found node with no parent and root is already initialized")
                     continue
                 }
                 tsNode = self

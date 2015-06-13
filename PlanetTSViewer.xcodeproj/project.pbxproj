@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC6432611B2C9C1F0060AB81 /* LaunchScreenXCode6.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC64325F1B2C9C1F0060AB81 /* LaunchScreenXCode6.xib */; };
 		DCA932F11B2B3615002DD210 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA932F01B2B3615002DD210 /* AppDelegate.swift */; };
 		DCA932F31B2B3615002DD210 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA932F21B2B3615002DD210 /* ViewController.swift */; };
 		DCA932F61B2B3615002DD210 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCA932F41B2B3615002DD210 /* Main.storyboard */; };
 		DCA932F81B2B3615002DD210 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCA932F71B2B3615002DD210 /* Assets.xcassets */; };
-		DCA932FB1B2B3615002DD210 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCA932F91B2B3615002DD210 /* LaunchScreen.storyboard */; };
 		DCA933061B2B3615002DD210 /* PlanetTSViewerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA933051B2B3615002DD210 /* PlanetTSViewerTests.swift */; };
 		DCA933111B2B3615002DD210 /* PlanetTSViewerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA933101B2B3615002DD210 /* PlanetTSViewerUITests.swift */; };
 		DCA933231B2B3710002DD210 /* TSServerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA933221B2B3710002DD210 /* TSServerViewController.swift */; };
@@ -36,12 +36,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DC6432601B2C9C1F0060AB81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreenXCode6.xib; sourceTree = "<group>"; };
 		DCA932ED1B2B3615002DD210 /* PlanetTSViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlanetTSViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCA932F01B2B3615002DD210 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DCA932F21B2B3615002DD210 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DCA932F51B2B3615002DD210 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DCA932F71B2B3615002DD210 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		DCA932FA1B2B3615002DD210 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DCA932FC1B2B3615002DD210 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DCA933011B2B3615002DD210 /* PlanetTSViewerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlanetTSViewerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCA933051B2B3615002DD210 /* PlanetTSViewerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetTSViewerTests.swift; sourceTree = "<group>"; };
@@ -107,8 +107,8 @@
 				DCA933221B2B3710002DD210 /* TSServerViewController.swift */,
 				DCA932F41B2B3615002DD210 /* Main.storyboard */,
 				DCA932F71B2B3615002DD210 /* Assets.xcassets */,
-				DCA932F91B2B3615002DD210 /* LaunchScreen.storyboard */,
 				DCA932FC1B2B3615002DD210 /* Info.plist */,
+				DC64325F1B2C9C1F0060AB81 /* LaunchScreenXCode6.xib */,
 			);
 			path = PlanetTSViewer;
 			sourceTree = "<group>";
@@ -234,7 +234,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DCA932FB1B2B3615002DD210 /* LaunchScreen.storyboard in Resources */,
+				DC6432611B2C9C1F0060AB81 /* LaunchScreenXCode6.xib in Resources */,
 				DCA932F81B2B3615002DD210 /* Assets.xcassets in Resources */,
 				DCA932F61B2B3615002DD210 /* Main.storyboard in Resources */,
 			);
@@ -300,20 +300,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		DC64325F1B2C9C1F0060AB81 /* LaunchScreenXCode6.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC6432601B2C9C1F0060AB81 /* Base */,
+			);
+			name = LaunchScreenXCode6.xib;
+			sourceTree = "<group>";
+		};
 		DCA932F41B2B3615002DD210 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				DCA932F51B2B3615002DD210 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		DCA932F91B2B3615002DD210 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DCA932FA1B2B3615002DD210 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
