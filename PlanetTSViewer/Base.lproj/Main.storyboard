@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8121.17" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="lQf-XW-6OX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="lQf-XW-6OX">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8101.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
         <!--Servers-->
@@ -17,18 +16,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DcK-Q6-SfU">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DcK-Q6-SfU">
                                 <rect key="frame" x="237" y="141" width="127" height="30"/>
                                 <state key="normal" title="Planet TeamSpeak"/>
                                 <connections>
                                     <action selector="showPlanetTeamSpeak:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Hdm-sp-B2E"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Isk-8x-HyZ">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Isk-8x-HyZ">
                                 <rect key="frame" x="242" y="206" width="117" height="30"/>
                                 <state key="normal" title="Rocket Beans TV"/>
                                 <connections>
                                     <action selector="showRocketBeans:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QEu-1F-BZ6"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z85-8U-WAf">
+                                <rect key="frame" x="242" y="330" width="117" height="30"/>
+                                <state key="normal" title="Server Browser"/>
+                                <connections>
+                                    <segue destination="TgX-Z4-P6T" kind="show" id="8sP-GT-63t"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -36,6 +42,8 @@
                         <constraints>
                             <constraint firstItem="DcK-Q6-SfU" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3cU-zY-Scg"/>
                             <constraint firstItem="DcK-Q6-SfU" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="77" id="EuK-l4-ce4"/>
+                            <constraint firstAttribute="centerX" secondItem="z85-8U-WAf" secondAttribute="centerX" constant="-0.5" id="Mdt-Lj-Nbv"/>
+                            <constraint firstItem="z85-8U-WAf" firstAttribute="top" secondItem="Isk-8x-HyZ" secondAttribute="bottom" constant="94" id="gEU-Gv-MAa"/>
                             <constraint firstItem="Isk-8x-HyZ" firstAttribute="top" secondItem="DcK-Q6-SfU" secondAttribute="bottom" constant="35" id="mpw-Sh-qEC"/>
                             <constraint firstItem="Isk-8x-HyZ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="w9N-Hx-klo"/>
                         </constraints>
@@ -91,6 +99,47 @@
             </objects>
             <point key="canvasLocation" x="1959" y="395"/>
         </scene>
+        <!--Server Browser View Controller-->
+        <scene sceneID="ej9-xf-2iR">
+            <objects>
+                <tableViewController id="TgX-Z4-P6T" customClass="ServerBrowserViewController" customModule="PlanetTSViewer" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="tWj-8u-84v">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="serverCell" textLabel="v7w-9U-slJ" detailTextLabel="KuV-Gp-6SP" style="IBUITableViewCellStyleSubtitle" id="XIJ-nT-Ron">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XIJ-nT-Ron" id="cZs-j4-0Nv">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="v7w-9U-slJ">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KuV-Gp-6SP">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="TgX-Z4-P6T" id="0sn-UO-5wO"/>
+                            <outlet property="delegate" destination="TgX-Z4-P6T" id="dPR-s2-Jex"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="xRR-7K-xAs"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xxb-Ib-n8a" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1312" y="-279"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="ovK-Ct-kjt">
             <objects>
@@ -111,6 +160,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="client-idle" width="22" height="22"/>
+        <image name="client-idle" width="34" height="34"/>
     </resources>
 </document>

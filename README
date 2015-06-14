@@ -1,1 +1,7 @@
 Planet TeamSpeak json api iOS TS Viewer
+
+
+￼<16:04:19> "ScP": https://api.planetteamspeak.com/serverlist/
+￼<16:31:01> "ScP": https://api.planetteamspeak.com/serverlist/?country=de&search=Planet
+￼<16:33:14> "ScP": https://api.planetteamspeak.com/serverlist/?country=de&search=Planet&limit=123
+￼<16:44:14> "ScP": https://api.planetteamspeak.com/servercountries/
