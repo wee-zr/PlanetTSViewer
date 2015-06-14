@@ -10,6 +10,7 @@ import UIKit
 
 protocol TSServerDelegate : class {
     func serverLoaded(server: TSServer)
+    func server(server: TSServer, updatedIconForNode node: TSNode)
 }
 
 class TSNode : NSObject {
@@ -47,6 +48,8 @@ class TSNode : NSObject {
     var identifier = ""
     var indentation = 0
     var imageName = ""
+    var iconId = 0
+    var iconImage: UIImage?
     weak var parent: TSNode?
 
     var spacerType: SpacerType = .None
@@ -76,6 +79,10 @@ class TSNode : NSObject {
             if let spacer = props["spacer"] as? String where type == .Channel {
                 spacerType = SpacerType(string: spacer)
             }
+            
+            if let icon = props["icon"] as? NSNumber {
+                self.iconId = icon.integerValue
+            }
         }
     }
 }
@@ -90,9 +97,12 @@ class Weak<T: AnyObject> {
 class TSServer : TSNode {
     
     let showServerInTree = true // true will lead to a retain cycle, because TSServer adds itself to allNodes
+    var host: String?
     
     weak var delegate: TSServerDelegate?
     var allNodes: [Weak<TSNode>] = []
+    var allIcons = [Int: UIImage]()
+    var allIconRequests = [Int: [TSNode]]()
     
     init(contentsOfURL: NSURL) {
         super.init()
@@ -101,6 +111,9 @@ class TSServer : TSNode {
         let task = session.downloadTaskWithURL(contentsOfURL, completionHandler: handleDownloadTask)
         println("starting download task for url \(contentsOfURL)")
         task.resume()
+        
+        host = contentsOfURL.path?.lastPathComponent
+        println("host is \(host)")
     }
     
     func nodeWithIdentifier(identifier: String) -> TSNode? {
@@ -117,6 +130,15 @@ class TSServer : TSNode {
         return nil
     }
     
+    func indexOfNode(node: TSNode) -> Int? {
+        for (index: Int, childNode) in enumerate(allNodes) {
+            if childNode.value == node {
+                return index
+            }
+        }
+        return nil
+    }
+    
     private func handleDownloadTask(location: NSURL?, response: NSURLResponse?, error: NSError?) {
         if let actualLocation = location {
             println("downlaod task completed")
@@ -124,6 +146,7 @@ class TSServer : TSNode {
             if let data = NSData(contentsOfURL: actualLocation) {
                 println("response size in bytes: \(data.length)")
                 if let json = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as? NSDictionary {
+                    //println(json)
                     dispatch_async(dispatch_get_main_queue()) { //load the data on the main thread
                         self.loadJSONObject(json)
                     }
@@ -194,10 +217,83 @@ class TSServer : TSNode {
                 allNodes.append(Weak(tsNode))
             }
             
-            
+            if tsNode.iconId != 0 {
+                requestIconForNode(tsNode)
+            }
         }
         
         delegate?.serverLoaded(self)
     }
     
+    private func requestIconForNode(node: TSNode) {
+        if node.iconId == 0 {
+            return
+        }
+        
+        if let image = allIcons[node.iconId] {
+            println("image \(node.iconId) already cached")
+            setIcon(image, forNode: node)
+            return
+        }
+        
+        if var imageRequests = allIconRequests[node.iconId] {
+            println("image \(node.iconId) already requesting")
+            imageRequests.append(node)
+            allIconRequests[node.iconId] = imageRequests
+            return
+        }
+        
+        if let host = self.host {
+            var url = NSURL(string: "https://api.planetteamspeak.com/servericon/\(host)/?id=\(node.iconId)&img=1")!
+            
+            // registering this request. currenty this is the only node that wants this iconId
+            allIconRequests[node.iconId] = [node]
+            
+            let session = NSURLSession.sharedSession()
+            let task = session.downloadTaskWithURL(url) { (location: NSURL?, response: NSURLResponse?, error: NSError?) in
+                if let actualLocation = location {
+                    
+                    if let data = NSData(contentsOfURL: actualLocation) {
+                        if let image = UIImage(data: data) {
+                            
+                            let biggerImage = image.resize(CGSize(width: 34, height: 34), pixelated: true)
+                            
+                            dispatch_async(dispatch_get_main_queue()) { //load the data on the main thread
+                                println("image \(node.iconId) downloaded")
+                                self.allIcons[node.iconId] = biggerImage
+                                
+                                if let requestingNodes = self.allIconRequests[node.iconId] {
+                                    if requestingNodes.count > 1 {
+                                        println("- was requested \(requestingNodes.count) times")
+                                    }
+                                    for requestingNode in requestingNodes {
+                                        self.setIcon(biggerImage, forNode: requestingNode)
+                                    }
+                                    
+                                    // request is finished, can be removed
+                                    self.allIconRequests[node.iconId] = nil
+                                }
+                            }
+                        }
+                        else {
+                            println("can't get image \(node.iconId) from response")
+                        }
+                    }
+                }
+                
+                if let actualError = error {
+                    println("download image \(node.iconId) task error \(actualError.code): \(actualError.localizedDescription)")
+                }
+
+            }
+            
+            println("starting download of image \(node.iconId)")
+            task.resume()
+        }
+    }
+    
+    private func setIcon(icon: UIImage, forNode node: TSNode) {
+        node.iconImage = icon
+        self.delegate?.server(self, updatedIconForNode: node)
+    }
 }

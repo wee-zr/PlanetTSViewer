@@ -63,9 +63,11 @@ class TSServerViewController: UITableViewController, TSServerDelegate {
         // Dispose of any resources that can be recreated.
     }
 
+    // MARK: - TSServer delegate
+    
     func serverLoaded(server: TSServer) {
         navigationItem.title = server.name
-        tableView.separatorStyle = .SingleLine
+        //tableView.separatorStyle = .SingleLine
         tableView.scrollEnabled = true
         
         if let indikator = activityIndikator {
@@ -74,6 +76,12 @@ class TSServerViewController: UITableViewController, TSServerDelegate {
         }
         
         tableView.reloadData()
+    }
+    
+    func server(server: TSServer, updatedIconForNode node: TSNode) {
+        if let row = server.indexOfNode(node) {
+            tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: row, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+        }
     }
     
     // MARK: - Table view data source
@@ -127,6 +135,10 @@ class TSServerViewController: UITableViewController, TSServerDelegate {
 
         if tsNode.type == .Server {
             cell.imageView!.image = UIImage(named: "server")
+        }
+        
+        if let iconImage = tsNode.iconImage {
+            cell.imageView!.image = iconImage
         }
     }
     
