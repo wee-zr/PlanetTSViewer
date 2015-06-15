@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="lQf-XW-6OX">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Servers-->
@@ -66,26 +67,49 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="tsNode" textLabel="ZxG-Po-xT9" imageView="cXL-d0-Rpl" style="IBUITableViewCellStyleDefault" id="0VI-1q-q1f" customClass="TSServerViewCell" customModule="PlanetTSViewer" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="tsNode" id="0VI-1q-q1f" userLabel="I" customClass="TSServerViewCell" customModule="PlanetTSViewer" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="86" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0VI-1q-q1f" id="dRo-Mv-WjW">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZxG-Po-xT9">
-                                            <rect key="frame" x="52" y="0.0" width="533" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Kd6-sE-0CO">
+                                            <rect key="frame" x="26" y="6" width="32" height="32"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="32" id="2f1-rO-6Q0"/>
+                                                <constraint firstAttribute="height" constant="32" id="gkr-fA-oZw"/>
+                                            </constraints>
+                                        </imageView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SCH-jS-AB4">
+                                            <rect key="frame" x="26" y="5.5" width="32" height="32"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="32" id="gGw-Fg-eaX"/>
+                                                <constraint firstAttribute="width" constant="32" id="ha5-Gz-tvN"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="omF-0z-XxE">
+                                            <rect key="frame" x="76" y="11" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="client-idle" id="cXL-d0-Rpl">
-                                            <rect key="frame" x="15" y="10" width="22" height="22"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </imageView>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="centerY" secondItem="omF-0z-XxE" secondAttribute="centerY" constant="0.25" id="9LF-tI-4AY"/>
+                                        <constraint firstAttribute="centerY" secondItem="SCH-jS-AB4" secondAttribute="centerY" constant="0.5" id="Hfo-JE-Oe8"/>
+                                        <constraint firstItem="SCH-jS-AB4" firstAttribute="centerY" secondItem="Kd6-sE-0CO" secondAttribute="centerY" constant="-0.5" id="OYg-Ud-t6b"/>
+                                        <constraint firstItem="Kd6-sE-0CO" firstAttribute="trailing" secondItem="SCH-jS-AB4" secondAttribute="trailing" id="Wsb-NC-TTq"/>
+                                        <constraint firstItem="omF-0z-XxE" firstAttribute="leading" secondItem="SCH-jS-AB4" secondAttribute="trailing" constant="18" id="dJI-e1-1kw"/>
+                                        <constraint firstItem="SCH-jS-AB4" firstAttribute="leading" secondItem="dRo-Mv-WjW" secondAttribute="leadingMargin" constant="18" id="ewl-p0-UR3"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="iconImageView" destination="Kd6-sE-0CO" id="v00-ib-7lZ"/>
+                                    <outlet property="indentationConstraint" destination="ewl-p0-UR3" id="nqc-ke-XUa"/>
+                                    <outlet property="nameLabel" destination="omF-0z-XxE" id="YlF-z8-QOh"/>
+                                    <outlet property="typeImageView" destination="SCH-jS-AB4" id="5Ji-Sb-M0H"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -159,7 +183,4 @@
             <point key="canvasLocation" x="500" y="405"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="client-idle" width="34" height="34"/>
-    </resources>
 </document>

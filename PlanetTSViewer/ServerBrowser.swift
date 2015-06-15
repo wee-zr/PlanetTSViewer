@@ -35,7 +35,7 @@ class ServerInfo : NSObject {
     var membership: Membership = .Basic
     var slots: Int = 0
     var users: Int = 0
-    var publicChannels: Bool = false
+    var createChannels: Bool = false
     var online: Bool = false
     var password: Bool = false
     
@@ -65,8 +65,8 @@ class ServerInfo : NSObject {
             self.users = users.integerValue
         }
         
-        if let publicChannels = json["channels"] as? NSNumber {
-            self.publicChannels = publicChannels.boolValue
+        if let createChannels = json["createchannels"] as? NSNumber {
+            self.createChannels = createChannels.boolValue
         }
         
         if let online = json["online"] as? NSNumber {
@@ -91,6 +91,7 @@ class ServerBrowser : NSObject {
     
     func requestServers() {
         
+        //let url = NSURL(string: "https://api.planetteamspeak.com/serverlist/?country=de&limit=100&order=users:desc&userid=1")!
         let url = NSURL(string: "https://api.planetteamspeak.com/serverlist/?country=de&limit=10")!
         
         let session = NSURLSession.sharedSession()

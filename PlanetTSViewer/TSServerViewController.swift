@@ -9,6 +9,28 @@
 import UIKit
 
 class TSServerViewCell: UITableViewCell {
+    
+    @IBOutlet var indentationConstraint: NSLayoutConstraint?
+    @IBOutlet var typeImageView: UIImageView?
+    @IBOutlet var iconImageView: UIImageView?
+    @IBOutlet var nameLabel: UILabel?
+    
+    override var indentationLevel: Int {
+        didSet {
+            if let constaint = indentationConstraint {
+                constaint.constant = 18 + CGFloat(indentationLevel) * indentationWidth
+                setNeedsLayout()
+            }
+        }
+    }
+    
+    override var indentationWidth: CGFloat {
+        didSet {
+            let currentLevel = indentationLevel
+            indentationLevel = currentLevel // so the constaint gets updated
+        }
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -119,27 +141,56 @@ class TSServerViewController: UITableViewController, TSServerDelegate {
         
         let tsNode = server.allNodes[indexPath.row].value
         
-        cell.textLabel!.text = tsNode.name
-        cell.indentationLevel = tsNode.indentation - (server.showServerInTree ? 1 : 2)
-        cell.indentationWidth = 20
-        
-        if tsNode.spacerType == .None {
-            cell.imageView!.image = UIImage(named: tsNode.imageName)
-            cell.textLabel!.textColor = UIColor.darkTextColor()
-        }
-        else {
-            // is spacer
-            cell.imageView!.image = nil
-            cell.textLabel!.textColor = UIColor(white: 0.36, alpha: 1)
-        }
+        if let tsCell = cell as? TSServerViewCell {
+            tsCell.nameLabel!.text = tsNode.name
+            tsCell.indentationWidth = 20
+            tsCell.indentationLevel = tsNode.indentation - (server.showServerInTree ? 1 : 2)
 
-        if tsNode.type == .Server {
-            cell.imageView!.image = UIImage(named: "server")
+            if tsNode.spacerType == .None {
+                tsCell.typeImageView!.image = UIImage(named: tsNode.imageName)
+                tsCell.nameLabel!.textColor = UIColor.darkTextColor()
+            }
+            else {
+                // is spacer
+                tsCell.typeImageView!.image = nil
+                tsCell.nameLabel!.textColor = UIColor(white: 0.36, alpha: 1)
+            }
+
+            if tsNode.type == .Server {
+                tsCell.typeImageView!.image = UIImage(named: "server")
+            }
+            
+            if let iconImage = tsNode.iconImage {
+                tsCell.iconImageView!.image = iconImage
+                tsCell.typeImageView!.alpha = 0.6
+            }
+            else {
+                tsCell.typeImageView!.alpha = 1
+                
+            }
         }
         
-        if let iconImage = tsNode.iconImage {
-            cell.imageView!.image = iconImage
-        }
+//        cell.textLabel!.text = tsNode.name
+//        cell.indentationLevel = tsNode.indentation - (server.showServerInTree ? 1 : 2)
+//        cell.indentationWidth = 20
+//        
+//        if tsNode.spacerType == .None {
+//            cell.imageView!.image = UIImage(named: tsNode.imageName)
+//            cell.textLabel!.textColor = UIColor.darkTextColor()
+//        }
+//        else {
+//            // is spacer
+//            cell.imageView!.image = nil
+//            cell.textLabel!.textColor = UIColor(white: 0.36, alpha: 1)
+//        }
+//
+//        if tsNode.type == .Server {
+//            cell.imageView!.image = UIImage(named: "server")
+//        }
+//        
+//        if let iconImage = tsNode.iconImage {
+//            cell.imageView!.image = iconImage
+//        }
     }
     
     /*
