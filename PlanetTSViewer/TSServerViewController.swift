@@ -18,7 +18,7 @@ class TSServerViewCell: UITableViewCell {
     override var indentationLevel: Int {
         didSet {
             if let constaint = indentationConstraint {
-                constaint.constant = 18 + CGFloat(indentationLevel) * indentationWidth
+                constaint.constant = 8 + CGFloat(indentationLevel) * indentationWidth
                 setNeedsLayout()
             }
         }
@@ -165,6 +165,7 @@ class TSServerViewController: UITableViewController, TSServerDelegate {
                 tsCell.typeImageView!.alpha = 0.6
             }
             else {
+                tsCell.iconImageView!.image = nil
                 tsCell.typeImageView!.alpha = 1
                 
             }

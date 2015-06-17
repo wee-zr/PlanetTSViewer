@@ -92,7 +92,7 @@ class ServerBrowser : NSObject {
     func requestServers() {
         
         //let url = NSURL(string: "https://api.planetteamspeak.com/serverlist/?country=de&limit=100&order=users:desc&userid=1")!
-        let url = NSURL(string: "https://api.planetteamspeak.com/serverlist/?country=de&limit=10")!
+        let url = NSURL(string: "https://api.planetteamspeak.com/serverlist/?limit=10")!
         
         let session = NSURLSession.sharedSession()
         let task = session.downloadTaskWithURL(url, completionHandler: handleDownloadTask)

@@ -16,20 +16,12 @@
 		DCA932F61B2B3615002DD210 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCA932F41B2B3615002DD210 /* Main.storyboard */; };
 		DCA932F81B2B3615002DD210 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCA932F71B2B3615002DD210 /* Assets.xcassets */; };
 		DCA933061B2B3615002DD210 /* PlanetTSViewerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA933051B2B3615002DD210 /* PlanetTSViewerTests.swift */; };
-		DCA933111B2B3615002DD210 /* PlanetTSViewerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA933101B2B3615002DD210 /* PlanetTSViewerUITests.swift */; };
 		DCA933231B2B3710002DD210 /* TSServerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA933221B2B3710002DD210 /* TSServerViewController.swift */; };
 		DCA933251B2B3739002DD210 /* TSServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCA933241B2B3739002DD210 /* TSServer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		DCA933021B2B3615002DD210 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DCA932E51B2B3615002DD210 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = DCA932EC1B2B3615002DD210;
-			remoteInfo = PlanetTSViewer;
-		};
-		DCA9330D1B2B3615002DD210 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DCA932E51B2B3615002DD210 /* Project object */;
 			proxyType = 1;
@@ -53,7 +45,6 @@
 		DCA933011B2B3615002DD210 /* PlanetTSViewerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlanetTSViewerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCA933051B2B3615002DD210 /* PlanetTSViewerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetTSViewerTests.swift; sourceTree = "<group>"; };
 		DCA933071B2B3615002DD210 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DCA9330C1B2B3615002DD210 /* PlanetTSViewerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlanetTSViewerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCA933101B2B3615002DD210 /* PlanetTSViewerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetTSViewerUITests.swift; sourceTree = "<group>"; };
 		DCA933121B2B3615002DD210 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DCA933221B2B3710002DD210 /* TSServerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TSServerViewController.swift; sourceTree = "<group>"; };
@@ -69,13 +60,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		DCA932FE1B2B3615002DD210 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DCA933091B2B3615002DD210 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -101,7 +85,6 @@
 			children = (
 				DCA932ED1B2B3615002DD210 /* PlanetTSViewer.app */,
 				DCA933011B2B3615002DD210 /* PlanetTSViewerTests.xctest */,
-				DCA9330C1B2B3615002DD210 /* PlanetTSViewerUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -180,24 +163,6 @@
 			productReference = DCA933011B2B3615002DD210 /* PlanetTSViewerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		DCA9330B1B2B3615002DD210 /* PlanetTSViewerUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = DCA9331B1B2B3615002DD210 /* Build configuration list for PBXNativeTarget "PlanetTSViewerUITests" */;
-			buildPhases = (
-				DCA933081B2B3615002DD210 /* Sources */,
-				DCA933091B2B3615002DD210 /* Frameworks */,
-				DCA9330A1B2B3615002DD210 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				DCA9330E1B2B3615002DD210 /* PBXTargetDependency */,
-			);
-			name = PlanetTSViewerUITests;
-			productName = PlanetTSViewerUITests;
-			productReference = DCA9330C1B2B3615002DD210 /* PlanetTSViewerUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -211,10 +176,6 @@
 						CreatedOnToolsVersion = 7.0;
 					};
 					DCA933001B2B3615002DD210 = {
-						CreatedOnToolsVersion = 7.0;
-						TestTargetID = DCA932EC1B2B3615002DD210;
-					};
-					DCA9330B1B2B3615002DD210 = {
 						CreatedOnToolsVersion = 7.0;
 						TestTargetID = DCA932EC1B2B3615002DD210;
 					};
@@ -235,7 +196,6 @@
 			targets = (
 				DCA932EC1B2B3615002DD210 /* PlanetTSViewer */,
 				DCA933001B2B3615002DD210 /* PlanetTSViewerTests */,
-				DCA9330B1B2B3615002DD210 /* PlanetTSViewerUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -252,13 +212,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		DCA932FF1B2B3615002DD210 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DCA9330A1B2B3615002DD210 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -290,14 +243,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DCA933081B2B3615002DD210 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				DCA933111B2B3615002DD210 /* PlanetTSViewerUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -305,11 +250,6 @@
 			isa = PBXTargetDependency;
 			target = DCA932EC1B2B3615002DD210 /* PlanetTSViewer */;
 			targetProxy = DCA933021B2B3615002DD210 /* PBXContainerItemProxy */;
-		};
-		DCA9330E1B2B3615002DD210 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = DCA932EC1B2B3615002DD210 /* PlanetTSViewer */;
-			targetProxy = DCA9330D1B2B3615002DD210 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -464,30 +404,6 @@
 			};
 			name = Release;
 		};
-		DCA9331C1B2B3615002DD210 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = PlanetTSViewerUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.wz.PlanetTSViewerUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = PlanetTSViewer;
-				USES_XCTRUNNER = YES;
-			};
-			name = Debug;
-		};
-		DCA9331D1B2B3615002DD210 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = PlanetTSViewerUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.wz.PlanetTSViewerUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = PlanetTSViewer;
-				USES_XCTRUNNER = YES;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -514,15 +430,6 @@
 			buildConfigurations = (
 				DCA933191B2B3615002DD210 /* Debug */,
 				DCA9331A1B2B3615002DD210 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		DCA9331B1B2B3615002DD210 /* Build configuration list for PBXNativeTarget "PlanetTSViewerUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				DCA9331C1B2B3615002DD210 /* Debug */,
-				DCA9331D1B2B3615002DD210 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
