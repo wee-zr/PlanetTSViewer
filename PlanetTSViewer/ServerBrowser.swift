@@ -9,22 +9,22 @@
 import Foundation
 
 protocol ServerBrowserDelegate : class {
-    func serverBrowserLoadedServers(serverBrowser: ServerBrowser)
+    func serverBrowserLoadedServers(_ serverBrowser: ServerBrowser)
 }
 
 class ServerInfo : NSObject {
     
     enum Membership: Int {
-        case Basic = 0
-        case Member
-        case Premium
+        case basic = 0
+        case member
+        case premium
         
         init(value: Int) {
-            if value >= Membership.Basic.rawValue && value <= Membership.Premium.rawValue {
+            if value >= Membership.basic.rawValue && value <= Membership.premium.rawValue {
                 self = Membership(rawValue: value)!
             }
             else {
-                self = .Basic
+                self = .basic
             }
         }
     }
@@ -32,14 +32,14 @@ class ServerInfo : NSObject {
     var address: String = ""
     var country: String = ""
     var name: String = ""
-    var membership: Membership = .Basic
+    var membership: Membership = .basic
     var slots: Int = 0
     var users: Int = 0
     var createChannels: Bool = false
     var online: Bool = false
     var password: Bool = false
     
-    func takeValuesFromJSONObject(json: NSDictionary) {
+    func takeValuesFromJSONObject(_ json: NSDictionary) {
         
         if let address = json["address"] as? String {
             self.address = address
@@ -54,15 +54,15 @@ class ServerInfo : NSObject {
         }
         
         if let membership = json["membership"] as? NSNumber {
-            self.membership = Membership(value: membership.integerValue)
+            self.membership = Membership(value: membership.intValue)
         }
         
         if let slots = json["slots"] as? NSNumber {
-            self.slots = slots.integerValue
+            self.slots = slots.intValue
         }
         
         if let users = json["users"] as? NSNumber {
-            self.users = users.integerValue
+            self.users = users.intValue
         }
         
         if let createChannels = json["createchannels"] as? NSNumber {
@@ -92,45 +92,48 @@ class ServerBrowser : NSObject {
     func requestServers() {
         
         //let url = NSURL(string: "https://api.planetteamspeak.com/serverlist/?country=de&limit=100&order=users:desc&userid=1")!
-        let url = NSURL(string: "https://api.planetteamspeak.com/serverlist/?limit=10")!
+        let url = URL(string: "https://api.planetteamspeak.com/serverlist/?limit=10")!
         
-        let session = NSURLSession.sharedSession()
-        let task = session.downloadTaskWithURL(url, completionHandler: handleDownloadTask)
-        println("starting download task  for server list \(url)")
+        let session = URLSession.shared
+        let task = session.downloadTask(with: url, completionHandler: handleDownloadTask)
+        print("starting download task  for server list \(url)")
         task.resume()
 
     }
     
-    private func handleDownloadTask(location: NSURL?, response: NSURLResponse?, error: NSError?) {
-        if let actualLocation = location {
-            println("downlaod server list task completed")
+    fileprivate func handleDownloadTask(_ location: URL?, _ response: URLResponse?, _ error: Error?) {
+        guard let actualLocation = location else {
+            if let actualError = error {
+                print("download task error \(actualError._code): \(actualError.localizedDescription)")
+            }
+            return
+        }
+
+        print("downlaod server list task completed")
             
-            if let data = NSData(contentsOfURL: actualLocation) {
-                println("response size in bytes: \(data.length)")
-                if let json = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as? NSDictionary {
-                    println(json)
+        if let data = try? Data(contentsOf: actualLocation) {
+            print("response size in bytes: \(data.count)")
+            do {
+                let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as! NSDictionary
+                DispatchQueue.main.async { //load the data on the main thread
                     if let newServers = self.loadJSONObject(json) {
-                        dispatch_async(dispatch_get_main_queue()) { //load the data on the main thread
+                        DispatchQueue.main.async { //load the data on the main thread
                             self.servers = newServers
                             self.delegate?.serverBrowserLoadedServers(self)
                         }
                     }
                     else {
-                        println("can't load servers from json")
+                        print("can't load servers from json")
                     }
                 }
-                else {
-                    println("can't get json data from response. error: \(error)")
-                }
+            } catch {
+                print("can't get json data from response. error: \(error)")
             }
-        }
-        
-        if let actualError = error {
-            println("download task error \(actualError.code): \(actualError.localizedDescription)")
+
         }
     }
     
-    private func loadJSONObject(json: NSDictionary) -> [ServerInfo]? {
+    fileprivate func loadJSONObject(_ json: NSDictionary) -> [ServerInfo]? {
         let result: NSDictionary
         let data: NSArray
         
@@ -138,7 +141,7 @@ class ServerBrowser : NSObject {
             result = actualResult
         }
         else {
-            println("no result object inside json data")
+            print("no result object inside json data")
             return nil
         }
         
@@ -146,11 +149,11 @@ class ServerBrowser : NSObject {
             data = actualData
         }
         else {
-            println("no data object inside json")
+            print("no data object inside json")
             return nil
         }
         
-        println("json data node count: \(data.count)")
+        print("json data node count: \(data.count)")
         
         var servers = [ServerInfo]()
         
@@ -169,7 +172,7 @@ class ServerBrowser : NSObject {
 //                parentIdent = parent
 //            }
 //            else {
-//                println("node has no parent")
+//                print("node has no parent")
 //                continue
 //            }
 //            
@@ -181,7 +184,7 @@ class ServerBrowser : NSObject {
 //            }
 //            else {
 //                if type != .Invalid {
-//                    println("found node with no parent and root is already initialized")
+//                    print("found node with no parent and root is already initialized")
 //                    continue
 //                }
 //                tsNode = self

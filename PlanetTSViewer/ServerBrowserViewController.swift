@@ -30,30 +30,30 @@ class ServerBrowserViewController: UITableViewController, ServerBrowserDelegate 
         // Dispose of any resources that can be recreated.
     }
 
-    func serverBrowserLoadedServers(serverBrowser: ServerBrowser) {
-        println("server browser loaded servers")
+    func serverBrowserLoadedServers(_ serverBrowser: ServerBrowser) {
+        print("server browser loaded servers")
         tableView.reloadData()
     }
     
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return serverBrowser.servers.count
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("serverCell", forIndexPath: indexPath) as! UITableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "serverCell", for: indexPath) 
 
         // Configure the cell...
 
         return cell
     }
     
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
         let serverInfo = serverBrowser.servers[indexPath.row]
         

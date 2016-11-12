@@ -9,40 +9,40 @@
 import UIKit
 
 protocol TSServerDelegate : class {
-    func serverLoaded(server: TSServer)
-    func server(server: TSServer, updatedIconForNode node: TSNode)
+    func serverLoaded(_ server: TSServer)
+    func server(_ server: TSServer, updatedIconForNode node: TSNode)
 }
 
 class TSNode : NSObject {
-    enum Type {
-        case Invalid
-        case Server
-        case Channel
-        case Client
+    enum `Type` {
+        case invalid
+        case server
+        case channel
+        case client
         
         init(string: String) {
             switch string {
-            case "server": self = .Server
-            case "channel": self = .Channel
-            case "client": self = .Client
-            default: self = .Invalid
+            case "server": self = .server
+            case "channel": self = .channel
+            case "client": self = .client
+            default: self = .invalid
             }
         }
     }
     
     enum SpacerType {
-        case None
-        case Some
+        case none
+        case some
         
         init(string: String) {
             switch string {
-            case "none": self = .None
-            default: self = .Some
+            case "none": self = .none
+            default: self = .some
             }
         }
     }
     
-    var type: Type = .Invalid
+    var type: Type = .invalid
     var children: [TSNode] = []
     var name = "unnamed"
     var identifier = ""
@@ -52,15 +52,15 @@ class TSNode : NSObject {
     var iconImage: UIImage?
     weak var parent: TSNode?
 
-    var spacerType: SpacerType = .None
+    var spacerType: SpacerType = .none
     
-    func takeValuesFromJSONObject(json: NSDictionary) {
+    func takeValuesFromJSONObject(_ json: NSDictionary) {
         if let type = json["class"] as? String {
             self.type = Type(string: type)
         }
         
         if let level = json["level"] as? NSNumber {
-            self.indentation = level.integerValue
+            self.indentation = level.intValue
         }
         
         if let ident = json["ident"] as? String {
@@ -76,12 +76,12 @@ class TSNode : NSObject {
         }
         
         if let props = json["props"] as? NSDictionary {
-            if let spacer = props["spacer"] as? String where type == .Channel {
+            if let spacer = props["spacer"] as? String, type == .channel {
                 spacerType = SpacerType(string: spacer)
             }
             
             if let icon = props["icon"] as? NSNumber {
-                self.iconId = icon.integerValue
+                self.iconId = icon.intValue
             }
         }
     }
@@ -104,19 +104,19 @@ class TSServer : TSNode {
     var allIcons = [Int: UIImage]()
     var allIconRequests = [Int: [TSNode]]()
     
-    init(contentsOfURL: NSURL) {
+    init(contentsOfURL: URL) {
         super.init()
         
-        let session = NSURLSession.sharedSession()
-        let task = session.downloadTaskWithURL(contentsOfURL, completionHandler: handleDownloadTask)
-        println("starting download task for url \(contentsOfURL)")
+        let session = URLSession.shared
+        let task = session.downloadTask(with: contentsOfURL, completionHandler: handleDownloadTask)
+        print("starting download task for url \(contentsOfURL)")
         task.resume()
         
-        host = contentsOfURL.path?.lastPathComponent
-        println("host is \(host)")
+        host = contentsOfURL.lastPathComponent
+        print("host is \(host)")
     }
     
-    func nodeWithIdentifier(identifier: String) -> TSNode? {
+    func nodeWithIdentifier(_ identifier: String) -> TSNode? {
         if self.identifier == identifier {
             return self
         }
@@ -130,8 +130,8 @@ class TSServer : TSNode {
         return nil
     }
     
-    func indexOfNode(node: TSNode) -> Int? {
-        for (index: Int, childNode) in enumerate(allNodes) {
+    func indexOfNode(_ node: TSNode) -> Int? {
+        for (index, childNode) in allNodes.enumerated() {
             if childNode.value == node {
                 return index
             }
@@ -139,30 +139,30 @@ class TSServer : TSNode {
         return nil
     }
     
-    private func handleDownloadTask(location: NSURL?, response: NSURLResponse?, error: NSError?) {
+    fileprivate func handleDownloadTask(_ location: URL?, _ response: URLResponse?, _ error: Error?) {
         if let actualLocation = location {
-            println("downlaod task completed")
+            print("downlaod task completed")
             
-            if let data = NSData(contentsOfURL: actualLocation) {
-                println("response size in bytes: \(data.length)")
-                if let json = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: nil) as? NSDictionary {
-                    //println(json)
-                    dispatch_async(dispatch_get_main_queue()) { //load the data on the main thread
+            if let data = NSData(contentsOf: actualLocation) {
+                print("response size in bytes: \(data.length)")
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data as Data, options: .mutableContainers) as! NSDictionary
+                    DispatchQueue.main.async { //load the data on the main thread
                         self.loadJSONObject(json)
                     }
-                }
-                else {
-                    println("can't get json data from response. error: \(error)")
+                } catch {
+                    print("can't get json data from response. error: \(error)")
                 }
             }
+
         }
         
         if let actualError = error {
-            println("download task error \(actualError.code): \(actualError.localizedDescription)")
+            print("download task error \(actualError.localizedDescription)")
         }
     }
     
-    private func loadJSONObject(json: NSDictionary) {
+    fileprivate func loadJSONObject(_ json: NSDictionary) {
         let result: NSDictionary
         let data: NSArray
         
@@ -170,7 +170,7 @@ class TSServer : TSNode {
             result = actualResult
         }
         else {
-            println("no result object inside json data")
+            print("no result object inside json data")
             return
         }
         
@@ -178,11 +178,11 @@ class TSServer : TSNode {
             data = actualData
         }
         else {
-            println("no data object inside json")
+            print("no data object inside json")
             return
         }
         
-        println("json data node count: \(data.count)")
+        print("json data node count: \(data.count)")
         
         for node in data as! [NSDictionary] {
             let parentIdent: String
@@ -190,7 +190,7 @@ class TSServer : TSNode {
                 parentIdent = parent
             }
             else {
-                println("node has no parent")
+                print("node has no parent")
                 continue
             }
             
@@ -201,8 +201,8 @@ class TSServer : TSNode {
                 parent.children.append(tsNode)
             }
             else {
-                if type != .Invalid {
-                    println("found node with no parent and root is already initialized")
+                if type != .invalid {
+                    print("found node with no parent and root is already initialized")
                     continue
                 }
                 tsNode = self
@@ -210,7 +210,7 @@ class TSServer : TSNode {
             
             tsNode.takeValuesFromJSONObject(node)
             
-            if let server = tsNode as? TSServer where server.showServerInTree == false {
+            if let server = tsNode as? TSServer, server.showServerInTree == false {
                 // don't add server itself to the tree
             }
             else {
@@ -225,46 +225,46 @@ class TSServer : TSNode {
         delegate?.serverLoaded(self)
     }
     
-    private func requestIconForNode(node: TSNode) {
+    fileprivate func requestIconForNode(_ node: TSNode) {
         if node.iconId == 0 {
             return
         }
         
         if let image = allIcons[node.iconId] {
-            println("image \(node.iconId) already cached")
+            print("image \(node.iconId) already cached")
             setIcon(image, forNode: node)
             return
         }
         
         if var imageRequests = allIconRequests[node.iconId] {
-            println("image \(node.iconId) already requesting")
+            print("image \(node.iconId) already requesting")
             imageRequests.append(node)
             allIconRequests[node.iconId] = imageRequests
             return
         }
         
         if let host = self.host {
-            var url = NSURL(string: "https://api.planetteamspeak.com/servericon/\(host)/?id=\(node.iconId)&img=1")!
+            var url = URL(string: "https://api.planetteamspeak.com/servericon/\(host)/?id=\(node.iconId)&img=1")!
             
             // registering this request. currenty this is the only node that wants this iconId
             allIconRequests[node.iconId] = [node]
             
-            let session = NSURLSession.sharedSession()
-            let task = session.downloadTaskWithURL(url) { (location: NSURL?, response: NSURLResponse?, error: NSError?) in
+            let session = URLSession.shared
+            let task = session.downloadTask(with: url, completionHandler: { (_ location: URL?, _ response: URLResponse?, _ error: Error?) in
                 if let actualLocation = location {
                     
-                    if let data = NSData(contentsOfURL: actualLocation) {
+                    if let data = try? Data(contentsOf: actualLocation) {
                         if let image = UIImage(data: data) {
                             
                             let biggerImage = image.resize(CGSize(width: 34, height: 34), pixelated: true)
                             
-                            dispatch_async(dispatch_get_main_queue()) { //load the data on the main thread
-                                println("image \(node.iconId) downloaded")
+                            DispatchQueue.main.async { //load the data on the main thread
+                                print("image \(node.iconId) downloaded")
                                 self.allIcons[node.iconId] = biggerImage
                                 
                                 if let requestingNodes = self.allIconRequests[node.iconId] {
                                     if requestingNodes.count > 1 {
-                                        println("- was requested \(requestingNodes.count) times")
+                                        print("- was requested \(requestingNodes.count) times")
                                     }
                                     for requestingNode in requestingNodes {
                                         self.setIcon(biggerImage, forNode: requestingNode)
@@ -276,23 +276,23 @@ class TSServer : TSNode {
                             }
                         }
                         else {
-                            println("can't get image \(node.iconId) from response")
+                            print("can't get image \(node.iconId) from response")
                         }
                     }
                 }
                 
                 if let actualError = error {
-                    println("download image \(node.iconId) task error \(actualError.code): \(actualError.localizedDescription)")
+                    print("download image \(node.iconId) task error \(actualError.localizedDescription)")
                 }
 
-            }
+            })
             
-            println("starting download of image \(node.iconId)")
+            print("starting download of image \(node.iconId)")
             task.resume()
         }
     }
     
-    private func setIcon(icon: UIImage, forNode node: TSNode) {
+    fileprivate func setIcon(_ icon: UIImage, forNode node: TSNode) {
         node.iconImage = icon
         self.delegate?.server(self, updatedIconForNode: node)
     }

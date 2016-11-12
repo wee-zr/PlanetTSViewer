@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    var serverUrl: NSURL?
+    var serverUrl: URL?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,20 +22,19 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func showPlanetTeamSpeak(sender: AnyObject) {
-        serverUrl = NSURL(string: "https://api.planetteamspeak.com/servernodes/82.211.30.15:9987/")
-        self.performSegueWithIdentifier("showServerView", sender: self)
+    @IBAction func showPlanetTeamSpeak(_ sender: AnyObject) {
+        serverUrl = URL(string: "https://api.planetteamspeak.com/servernodes/84.200.62.248:9987/")
+        self.performSegue(withIdentifier: "showServerView", sender: self)
     }
     
-    @IBAction func showRocketBeans(sender: AnyObject) {
-        serverUrl = NSURL(string: "https://api.planetteamspeak.com/servernodes/176.57.130.67:9987")
-        self.performSegueWithIdentifier("showServerView", sender: self)
+    @IBAction func showRocketBeans(_ sender: AnyObject) {
+        serverUrl = URL(string: "https://api.planetteamspeak.com/servernodes/176.57.130.67:9987")
+        self.performSegue(withIdentifier: "showServerView", sender: self)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let serverViewController = segue.destinationViewController as? TSServerViewController,
-            let url = serverUrl
-            where segue.identifier == "showServerView" {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let serverViewController = segue.destination as? TSServerViewController,
+            let url = serverUrl, segue.identifier == "showServerView" {
             serverViewController.server = TSServer(contentsOfURL: url)
         }
     }

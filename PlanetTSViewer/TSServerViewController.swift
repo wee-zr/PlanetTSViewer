@@ -42,7 +42,7 @@ class TSServerViewController: UITableViewController, TSServerDelegate {
 
     var server: TSServer? {
         didSet {
-            if let actualServer = server where actualServer.delegate == nil {
+            if let actualServer = server, actualServer.delegate == nil {
                 actualServer.delegate = self
             }
         }
@@ -53,18 +53,18 @@ class TSServerViewController: UITableViewController, TSServerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.separatorStyle = .None
-        tableView.scrollEnabled = false
+        tableView.separatorStyle = .none
+        tableView.isScrollEnabled = false
         
-        activityIndikator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+        activityIndikator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         if let indikator = activityIndikator {
-            indikator.setTranslatesAutoresizingMaskIntoConstraints(false)
+            indikator.translatesAutoresizingMaskIntoConstraints = false
         
             tableView.addSubview(indikator)
-            tableView.addConstraint(NSLayoutConstraint(item: indikator, attribute: .CenterX, relatedBy: .Equal,
-                toItem: tableView, attribute: .CenterX, multiplier: 1, constant: 0))
-            tableView.addConstraint(NSLayoutConstraint(item: indikator, attribute: .Top, relatedBy: .Equal,
-                toItem: self.topLayoutGuide, attribute: .Top, multiplier: 1, constant: 44))
+            tableView.addConstraint(NSLayoutConstraint(item: indikator, attribute: .centerX, relatedBy: .equal,
+                toItem: tableView, attribute: .centerX, multiplier: 1, constant: 0))
+            tableView.addConstraint(NSLayoutConstraint(item: indikator, attribute: .top, relatedBy: .equal,
+                toItem: self.topLayoutGuide, attribute: .top, multiplier: 1, constant: 44))
 
             indikator.startAnimating()
         }
@@ -87,50 +87,50 @@ class TSServerViewController: UITableViewController, TSServerDelegate {
 
     // MARK: - TSServer delegate
     
-    func serverLoaded(server: TSServer) {
+    func serverLoaded(_ server: TSServer) {
         navigationItem.title = server.name
         //tableView.separatorStyle = .SingleLine
-        tableView.scrollEnabled = true
+        tableView.isScrollEnabled = true
         
         if let indikator = activityIndikator {
-            indikator.hidden = true
+            indikator.isHidden = true
             indikator.stopAnimating()
         }
         
         tableView.reloadData()
     }
     
-    func server(server: TSServer, updatedIconForNode node: TSNode) {
+    func server(_ server: TSServer, updatedIconForNode node: TSNode) {
         if let row = server.indexOfNode(node) {
-            tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: row, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+            tableView.reloadRows(at: [IndexPath(row: row, section: 0)], with: UITableViewRowAnimation.automatic)
         }
     }
     
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         if self.server != nil {
             return 1
         }
         return 0
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let server = self.server {
             return server.allNodes.count
         }
         return 0
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("tsNode", forIndexPath: indexPath) as! UITableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "tsNode", for: indexPath) 
 
         // Configure the cell...
 
         return cell
     }
 
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let server: TSServer
         if let actualServer = self.server {
             server = actualServer
@@ -142,13 +142,13 @@ class TSServerViewController: UITableViewController, TSServerDelegate {
         let tsNode = server.allNodes[indexPath.row].value
         
         if let tsCell = cell as? TSServerViewCell {
-            tsCell.nameLabel!.text = tsNode.name
+            tsCell.nameLabel!.text = tsNode?.name
             tsCell.indentationWidth = 20
-            tsCell.indentationLevel = tsNode.indentation - (server.showServerInTree ? 1 : 2)
+            tsCell.indentationLevel = (tsNode?.indentation)! - (server.showServerInTree ? 1 : 2)
 
-            if tsNode.spacerType == .None {
-                tsCell.typeImageView!.image = UIImage(named: tsNode.imageName)
-                tsCell.nameLabel!.textColor = UIColor.darkTextColor()
+            if tsNode?.spacerType == .none {
+                tsCell.typeImageView!.image = UIImage(named: (tsNode?.imageName)!)
+                tsCell.nameLabel!.textColor = UIColor.darkText
             }
             else {
                 // is spacer
@@ -156,11 +156,11 @@ class TSServerViewController: UITableViewController, TSServerDelegate {
                 tsCell.nameLabel!.textColor = UIColor(white: 0.36, alpha: 1)
             }
 
-            if tsNode.type == .Server {
+            if tsNode?.type == .server {
                 tsCell.typeImageView!.image = UIImage(named: "server")
             }
             
-            if let iconImage = tsNode.iconImage {
+            if let iconImage = tsNode?.iconImage {
                 tsCell.iconImageView!.image = iconImage
                 tsCell.typeImageView!.alpha = 0.6
             }
