@@ -96,7 +96,7 @@ class Weak<T: AnyObject> {
 
 class TSServer : TSNode {
     
-    let showServerInTree = true // true will lead to a retain cycle, because TSServer adds itself to allNodes
+    let showServerInTree = false // true will lead to a retain cycle, because TSServer adds itself to allNodes
     var host: String?
     
     weak var delegate: TSServerDelegate?

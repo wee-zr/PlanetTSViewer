@@ -1,8 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="lQf-XW-6OX">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="lQf-XW-6OX">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Servers-->
@@ -14,7 +19,7 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DcK-Q6-SfU">
@@ -39,7 +44,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="DcK-Q6-SfU" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3cU-zY-Scg"/>
                             <constraint firstItem="DcK-Q6-SfU" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="77" id="EuK-l4-ce4"/>
@@ -63,15 +68,15 @@
             <objects>
                 <tableViewController id="XuM-5k-Zue" customClass="TSServerViewController" customModule="PlanetTSViewer" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="3il-oM-ZtR">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="tsNode" id="0VI-1q-q1f" userLabel="I" customClass="TSServerViewCell" customModule="PlanetTSViewer" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="86" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0VI-1q-q1f" id="dRo-Mv-WjW">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Kd6-sE-0CO">
@@ -81,34 +86,34 @@
                                                 <constraint firstAttribute="height" constant="32" id="gkr-fA-oZw"/>
                                             </constraints>
                                         </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SCH-jS-AB4">
-                                            <rect key="frame" x="26" y="5.5" width="32" height="32"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="32" id="gGw-Fg-eaX"/>
-                                                <constraint firstAttribute="width" constant="32" id="ha5-Gz-tvN"/>
-                                            </constraints>
-                                        </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="omF-0z-XxE">
                                             <rect key="frame" x="76" y="11.5" width="42" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SCH-jS-AB4">
+                                            <rect key="frame" x="268" y="6" width="32" height="32"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="32" id="gGw-Fg-eaX"/>
+                                                <constraint firstAttribute="width" constant="32" id="ha5-Gz-tvN"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="centerY" secondItem="omF-0z-XxE" secondAttribute="centerY" constant="0.25" id="9LF-tI-4AY"/>
                                         <constraint firstAttribute="centerY" secondItem="SCH-jS-AB4" secondAttribute="centerY" constant="0.5" id="Hfo-JE-Oe8"/>
-                                        <constraint firstItem="SCH-jS-AB4" firstAttribute="centerY" secondItem="Kd6-sE-0CO" secondAttribute="centerY" constant="-0.5" id="OYg-Ud-t6b"/>
-                                        <constraint firstItem="Kd6-sE-0CO" firstAttribute="trailing" secondItem="SCH-jS-AB4" secondAttribute="trailing" id="Wsb-NC-TTq"/>
-                                        <constraint firstItem="omF-0z-XxE" firstAttribute="leading" secondItem="SCH-jS-AB4" secondAttribute="trailing" constant="18" id="dJI-e1-1kw"/>
-                                        <constraint firstItem="SCH-jS-AB4" firstAttribute="leading" secondItem="dRo-Mv-WjW" secondAttribute="leadingMargin" constant="18" id="ewl-p0-UR3"/>
+                                        <constraint firstItem="Kd6-sE-0CO" firstAttribute="centerY" secondItem="dRo-Mv-WjW" secondAttribute="centerY" id="JPe-jY-nrI"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="SCH-jS-AB4" secondAttribute="trailing" constant="12" id="N4k-LY-gdg"/>
+                                        <constraint firstItem="omF-0z-XxE" firstAttribute="leading" secondItem="Kd6-sE-0CO" secondAttribute="trailing" constant="18" id="U3f-mP-GzW"/>
+                                        <constraint firstItem="Kd6-sE-0CO" firstAttribute="leading" secondItem="dRo-Mv-WjW" secondAttribute="leadingMargin" constant="18" id="dtT-Bi-gkU"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="iconImageView" destination="Kd6-sE-0CO" id="v00-ib-7lZ"/>
-                                    <outlet property="indentationConstraint" destination="ewl-p0-UR3" id="nqc-ke-XUa"/>
+                                    <outlet property="iconImageView" destination="SCH-jS-AB4" id="2hN-2Q-CTr"/>
+                                    <outlet property="indentationConstraint" destination="dtT-Bi-gkU" id="1L0-tJ-qU3"/>
                                     <outlet property="nameLabel" destination="omF-0z-XxE" id="YlF-z8-QOh"/>
-                                    <outlet property="typeImageView" destination="SCH-jS-AB4" id="5Ji-Sb-M0H"/>
+                                    <outlet property="typeImageView" destination="Kd6-sE-0CO" id="q0c-Vl-HWD"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -128,22 +133,26 @@
             <objects>
                 <tableViewController id="TgX-Z4-P6T" customClass="ServerBrowserViewController" customModule="PlanetTSViewer" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="tWj-8u-84v">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="serverCell" textLabel="v7w-9U-slJ" detailTextLabel="KuV-Gp-6SP" style="IBUITableViewCellStyleSubtitle" id="XIJ-nT-Ron">
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XIJ-nT-Ron" id="cZs-j4-0Nv">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="v7w-9U-slJ">
+                                            <rect key="frame" x="15" y="6" width="31.5" height="19.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KuV-Gp-6SP">
+                                            <rect key="frame" x="15" y="25.5" width="30.5" height="13.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>

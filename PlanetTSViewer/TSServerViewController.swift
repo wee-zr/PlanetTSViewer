@@ -30,12 +30,6 @@ class TSServerViewCell: UITableViewCell {
             indentationLevel = currentLevel // so the constaint gets updated
         }
     }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        imageView!.frame.origin.x += CGFloat(indentationLevel) * indentationWidth
-    }
 }
 
 class TSServerViewController: UITableViewController, TSServerDelegate {
@@ -47,6 +41,7 @@ class TSServerViewController: UITableViewController, TSServerDelegate {
             }
         }
     }
+    var serverChildsAreIndented = false
     
     var activityIndikator: UIActivityIndicatorView?
     
@@ -139,15 +134,18 @@ class TSServerViewController: UITableViewController, TSServerDelegate {
             return
         }
         
-        let tsNode = server.allNodes[indexPath.row].value
+        guard let tsCell = cell as? TSServerViewCell else {
+            return
+        }
         
-        if let tsCell = cell as? TSServerViewCell {
-            tsCell.nameLabel!.text = tsNode?.name
+        if let tsNode = server.allNodes[indexPath.row].value {
+            tsCell.nameLabel!.text = tsNode.name
             tsCell.indentationWidth = 20
-            tsCell.indentationLevel = (tsNode?.indentation)! - (server.showServerInTree ? 1 : 2)
-
-            if tsNode?.spacerType == .none {
-                tsCell.typeImageView!.image = UIImage(named: (tsNode?.imageName)!)
+            tsCell.indentationLevel = (tsNode.indentation) - (server.showServerInTree ? 1 : 2)
+            tsCell.typeImageView!.alpha = 0.6
+            
+            if tsNode.spacerType == .none {
+                tsCell.typeImageView!.image = UIImage(named: (tsNode.imageName))
                 tsCell.nameLabel!.textColor = UIColor.darkText
             }
             else {
@@ -156,19 +154,26 @@ class TSServerViewController: UITableViewController, TSServerDelegate {
                 tsCell.nameLabel!.textColor = UIColor(white: 0.36, alpha: 1)
             }
 
-            if tsNode?.type == .server {
+            if tsNode.type == .server {
                 tsCell.typeImageView!.image = UIImage(named: "server")
             }
+//            else if tsNode.type == .channel {
+//                tsCell.typeImageView!.image = UIImage(named: "channel-open")
+//            }
+//            else if tsNode.type == .client {
+//                tsCell.typeImageView!.image = UIImage(named: "client-idle")
+//            }
             
-            if let iconImage = tsNode?.iconImage {
+            if let iconImage = tsNode.iconImage {
                 tsCell.iconImageView!.image = iconImage
-                tsCell.typeImageView!.alpha = 0.6
             }
             else {
                 tsCell.iconImageView!.image = nil
-                tsCell.typeImageView!.alpha = 1
-                
             }
+        }
+        else
+        {
+            print("not a ts node!")
         }
         
 //        cell.textLabel!.text = tsNode.name
